@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -16,6 +17,9 @@ public class Student {
 	@NotNull
 	@Column(nullable = false)
 	private String name;
+
+	@OneToOne
+	private Passport passport;
 
 	public Student() {
 
