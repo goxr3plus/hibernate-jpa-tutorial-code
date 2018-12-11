@@ -32,6 +32,13 @@ public class CourseRepository {
 
 		return course;
 	}
+	
+	public void addReviewForCourse() {
+		
+		Course course = findById(1003L);
+		
+		System.err.println(course.getReviews());
+	}
 
 	public void playWithEntityManager() {
 

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -18,6 +19,9 @@ public class Review {
 	@NotNull
 	@Column(nullable = false)
 	private String description;
+
+	@ManyToOne
+	private Course course;
 
 	public Review() {
 
@@ -44,9 +48,24 @@ public class Review {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
 
 	public Long getId() {
 		return id;
 	}
+
+	@Override
+	public String toString() {
+		return "Review [id=" + id + ", rating=" + rating + ", description=" + description + "]";
+	}
+
+
 
 }
