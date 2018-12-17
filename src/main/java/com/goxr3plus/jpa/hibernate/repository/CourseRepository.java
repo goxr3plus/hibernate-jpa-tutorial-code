@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.goxr3plus.jpa.hibernate.entity.Course;
+import com.goxr3plus.jpa.hibernate.entity.Review;
 
 @Repository
 @Transactional
@@ -38,6 +39,23 @@ public class CourseRepository {
 		Course course = findById(1003L);
 		
 		System.err.println(course.getReviews());
+		
+		
+		Review review = new Review("5","Great Hands-On Stuff");
+		Review review2 = new Review("5","Hatsoff");
+		
+		//Set the relationship
+		course.addReview(review);
+		review.setCourse(course);
+		
+		course.addReview(review2);
+		review2.setCourse(course);
+		
+		
+		//Save to database
+		em.persist(review);
+		em.persist(review2);
+		
 	}
 
 	public void playWithEntityManager() {

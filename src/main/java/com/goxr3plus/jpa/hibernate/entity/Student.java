@@ -1,10 +1,16 @@
 package com.goxr3plus.jpa.hibernate.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
@@ -22,11 +28,15 @@ public class Student {
 	@OneToOne(fetch = FetchType.LAZY)
 	private Passport passport;
 
+	@ManyToMany
+	@JoinTable(name = "STUDENT_COURSE", joinColumns = @JoinColumn(name = "STUDENT_ID"), inverseJoinColumns = @JoinColumn(name = "COURSE_ID"))
+	private List<Course> courses = new ArrayList<>();
+
 	public Student() {
 
 	}
 
-	public Student(String name) {
+	public Student(final String name) {
 		super();
 		this.name = name;
 	}
@@ -35,7 +45,7 @@ public class Student {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
@@ -43,7 +53,7 @@ public class Student {
 		return passport;
 	}
 
-	public void setPassport(Passport passport) {
+	public void setPassport(final Passport passport) {
 		this.passport = passport;
 	}
 
@@ -54,6 +64,14 @@ public class Student {
 	@Override
 	public String toString() {
 		return "Student [id=" + id + ", name=" + name + ", passport=" + passport + "]";
+	}
+
+	public List<Course> getCourse() {
+		return courses;
+	}
+
+	public void setCourse(final List<Course> course) {
+		this.courses = course;
 	}
 
 }

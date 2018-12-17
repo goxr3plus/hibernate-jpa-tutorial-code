@@ -1,12 +1,14 @@
 package com.goxr3plus.jpa.hibernate.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -40,12 +42,15 @@ public class Course {
 
 	@OneToMany(mappedBy = "course")
 	private List<Review> reviews;
+	
+	@ManyToMany(mappedBy = "courses")
+	private List<Student> students = new ArrayList<>();
 
 	public Course() {
 
 	}
 
-	public Course(String name) {
+	public Course(final String name) {
 		super();
 		this.name = name;
 	}
@@ -54,7 +59,7 @@ public class Course {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
@@ -66,11 +71,11 @@ public class Course {
 		return reviews;
 	}
 
-	public void addReview(Review review) {
+	public void addReview(final Review review) {
 		reviews.add(review);
 	}
 
-	public void removeReview(Review review) {
+	public void removeReview(final Review review) {
 		reviews.remove(review);
 	}
 
@@ -78,6 +83,14 @@ public class Course {
 	public String toString() {
 		return "Course [id=" + id + ", name=" + name + ", createdDate=" + createdDate + ", lastUpdatedDate="
 				+ lastUpdatedDate + "]";
+	}
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(final List<Student> students) {
+		this.students = students;
 	}
 
 }
