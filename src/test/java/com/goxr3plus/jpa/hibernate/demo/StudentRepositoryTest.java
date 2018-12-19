@@ -2,7 +2,6 @@ package com.goxr3plus.jpa.hibernate.demo;
 
 import javax.persistence.EntityManager;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -21,7 +20,7 @@ import com.goxr3plus.jpa.hibernate.repository.StudentRepository;
 @SpringBootTest(classes = DemoApplication.class)
 public class StudentRepositoryTest {
 
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private StudentRepository studentRepository;
@@ -37,17 +36,17 @@ public class StudentRepositoryTest {
 	@Transactional
 	public void retrieveStudentAndPassportDetails() {
 
-		Student student = em.find(Student.class, 2001L);
+		final Student student = em.find(Student.class, 2001L);
 		logger.info("Student ->{}", student);
 		logger.info("Student ->{}", student.getPassport());
 
 	}
-	
+
 	@Test
 	@Transactional
 	public void retrievePassportAndStudentDetails() {
 
-		Passport passport = em.find(Passport.class, 4001L);
+		final Passport passport = em.find(Passport.class, 4001L);
 		logger.info("Passport ->{}", passport);
 		logger.info("Student ->{}", passport.getStudent());
 
@@ -57,12 +56,12 @@ public class StudentRepositoryTest {
 	@Transactional // Persistence Context started here
 	public void someTest() {
 
-        // Retrieve Student
-		Student student = em.find(Student.class, 2001L);
+		// Retrieve Student
+		final Student student = em.find(Student.class, 2001L);
 		// Persistence Context ( Student )
 
 		// Retrieve Passport
-		Passport passport = student.getPassport();
+		final Passport passport = student.getPassport();
 		// Persistence Context ( Student , Passport )
 
 		// Update Passport
@@ -79,41 +78,47 @@ public class StudentRepositoryTest {
 
 	// @Ignore // This test is build to fail just to show you why
 	@Test
-	//@Transactional
+	// @Transactional
 	public void noTransactionalTest() {
 
 		// Retrieve Student
-		Student student = studentRepository.findById(2001L);
+		final Student student = studentRepository.findById(2001L);
 		// Persistence Context ( Student ) -- End of Transaction
 
-		// Retrieve Passport 
-		Passport passport = student.getPassport();
-		
-		
+		// Retrieve Passport
+		final Passport passport = student.getPassport();
+
 		// Update Passport
 		passport.setNumber("E123457");
 		// Error there is no transaction ----- No persistence Context
 
-
 	}
-	
+
 	@Test
 	public void transationCrazyTest() {
 		transationalProvidedByStudentRepository();
 	}
-	
+
 	public void transationalProvidedByStudentRepository() {
 		// Retrieve Student
-				Student student = studentRepository.findById(2001L);
-				// Persistence Context ( Student ) -- End of Transaction
+		final Student student = studentRepository.findById(2001L);
+		// Persistence Context ( Student ) -- End of Transaction
 
-				// Retrieve Passport 
-				Passport passport = student.getPassport();
-				
-				
-				// Update Passport
-				passport.setNumber("E123457");
-				// Error there is no transaction ----- No persistence Context
+		// Retrieve Passport
+		final Passport passport = student.getPassport();
+
+		// Update Passport
+		passport.setNumber("E123457");
+		// Error there is no transaction ----- No persistence Context
 
 	}
+
+	@Test
+	@Transactional
+	public void retrieveStudentAndCourses() {
+		final Student student = em.find(Student.class, 2001L);
+		System.err.println(student);
+		System.err.println(student.getCourses());
+	}
+
 }

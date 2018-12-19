@@ -42,9 +42,9 @@ public class Course {
 
 	@OneToMany(mappedBy = "course")
 	private List<Review> reviews;
-	
+
 	@ManyToMany(mappedBy = "courses")
-	private List<Student> students = new ArrayList<>();
+	private final List<Student> students = new ArrayList<>();
 
 	public Course() {
 
@@ -89,8 +89,8 @@ public class Course {
 		return students;
 	}
 
-	public void setStudents(final List<Student> students) {
-		this.students = students;
+	public void addStudent(final Student e) {
+		this.students.add(e);
 	}
 
 }

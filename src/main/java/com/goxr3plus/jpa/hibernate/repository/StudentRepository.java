@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.goxr3plus.jpa.hibernate.entity.Course;
 import com.goxr3plus.jpa.hibernate.entity.Passport;
 import com.goxr3plus.jpa.hibernate.entity.Student;
 
@@ -16,15 +17,15 @@ public class StudentRepository {
 	@Autowired
 	private EntityManager em;
 
-	public Student findById(Long id) {
+	public Student findById(final Long id) {
 		return em.find(Student.class, id);
 	}
 
-	public void deleteById(Long id) {
+	public void deleteById(final Long id) {
 		em.remove(findById(id));
 	}
 
-	public Student save(Student student) {
+	public Student save(final Student student) {
 		if (student.getId() == null)
 			em.persist(student);
 		else
@@ -34,13 +35,25 @@ public class StudentRepository {
 	}
 
 	public void saveStudentWithPassport() {
-		Passport passport = new Passport("Z123456");
+		final Passport passport = new Passport("Z123456");
 		em.persist(passport);
 		
 		
-		Student student = new Student("Mike");
+		final Student student = new Student("Mike");
 		student.setPassport(passport);
 		
+		em.persist(student);
+	}
+	
+	
+	public void insertHardCodedStudentAndCourse() {
+		final Student student = new Student("LIMAO");
+		final Course course  = new Course("Fisting");
+		em.persist(student);
+		em.persist(course);
+		
+		student.addCourse(course);
+		course.addStudent(student);
 		em.persist(student);
 	}
 }

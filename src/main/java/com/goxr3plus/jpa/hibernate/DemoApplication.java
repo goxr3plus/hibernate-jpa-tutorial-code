@@ -22,16 +22,17 @@ public class DemoApplication implements CommandLineRunner {
 	@Autowired
 	StudentRepository studentRepository;
 
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(final String... args) throws Exception {
 		
-
-		courseRepository.addReviewForCourse();
+		studentRepository.insertHardCodedStudentAndCourse();	
+		System.err.println("Br");
+		//courseRepository.addReviewForCourse();
 	}
 }

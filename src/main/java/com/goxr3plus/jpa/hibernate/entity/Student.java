@@ -30,7 +30,7 @@ public class Student {
 
 	@ManyToMany
 	@JoinTable(name = "STUDENT_COURSE", joinColumns = @JoinColumn(name = "STUDENT_ID"), inverseJoinColumns = @JoinColumn(name = "COURSE_ID"))
-	private List<Course> courses = new ArrayList<>();
+	private final List<Course> courses = new ArrayList<>();
 
 	public Student() {
 
@@ -66,12 +66,12 @@ public class Student {
 		return "Student [id=" + id + ", name=" + name + ", passport=" + passport + "]";
 	}
 
-	public List<Course> getCourse() {
+	public List<Course> getCourses() {
 		return courses;
 	}
 
-	public void setCourse(final List<Course> course) {
-		this.courses = course;
+	public void addCourse(final Course c) {
+		this.courses.add(c);
 	}
 
 }

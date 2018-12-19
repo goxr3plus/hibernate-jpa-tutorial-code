@@ -17,3 +17,9 @@ insert into student(id,name,passport_id) values (2003,'Jaisal',4003);
 insert into review(id,rating,description,course_id)  values (5001,'5','Great Course',1001);
 insert into review(id,rating,description,course_id)  values (5002,'5','Wonderful Course',1001);
 insert into review(id,rating,description,course_id)  values (5003,'5','Awesome Course',1003);
+
+insert into student_course(student_id,course_id) values 
+(2001,1001)
+,(2002,1001)
+,(2003,1001)
+,(2001,1003);
