@@ -1,7 +1,17 @@
 
-insert into course(id,FULLNAME,created_date,last_updated_date) values (1001,' JPA IN 50 STEPS',sysdate(),sysdate());
-insert into course(id,FULLNAME,created_date,last_updated_date) values (1002,' Spring IN 50 STEPS',sysdate(),sysdate());
-insert into course(id,FULLNAME,created_date,last_updated_date) values (1003,' Spring Boot IN 100 STEPS',sysdate(),sysdate());
+insert into course(id,FULLNAME,created_date,last_updated_date) values 
+(1001,' JPA IN 50 STEPS',sysdate(),sysdate()),
+(1002,' Spring IN 50 STEPS',sysdate(),sysdate()),
+(1003,' Spring Boot IN 100 STEPS',sysdate(),sysdate()),
+(1004,' JPA IN 50 STEPS',sysdate(),sysdate()),
+(1005,' Spring IN 50 STEPS',sysdate(),sysdate()),
+(1006,' JPA IN 50 STEPS',sysdate(),sysdate()),
+(1007,' Spring IN 50 STEPS',sysdate(),sysdate()),
+(1008,' JPA IN 50 STEPS',sysdate(),sysdate()),
+(1009,' Spring IN 50 STEPS',sysdate(),sysdate()),
+(1010,' JPA IN 50 STEPS',sysdate(),sysdate()),
+(1011,' Spring IN 50 STEPS',sysdate(),sysdate());
+
 
 
 insert into passport(id,number) values (4001,'E123456');
