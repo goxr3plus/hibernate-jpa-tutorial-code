@@ -7,10 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@MappedSuperclass
+//@Entity
+//@Inheritance(strategy = InheritanceType.JOINED)
 //@DiscriminatorColumn(name = "EmployeeType") //-- Needed only for SINGLE_TABLE
 public class Employee {
 

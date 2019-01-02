@@ -39,9 +39,11 @@ public class DemoApplication implements CommandLineRunner {
 	@Override
 	public void run(final String... args) throws Exception {
 
-		employeeRepository.insert(new FullTimeEmployee("Jack", new BigDecimal(1000)));
-		employeeRepository.insert(new PartTimeEmployee("Jill", new BigDecimal(50)));
+//		employeeRepository.insert(new FullTimeEmployee("Jack", new BigDecimal(1000)));
+//		employeeRepository.insert(new PartTimeEmployee("Jill", new BigDecimal(50)));
+//
+//		System.err.println("Part Time : "+employeeRepository.retrievePartTimeEmployees());
+//		System.err.println("Full Time : "+employeeRepository.retrieveFullTimeEmployees());
 
-		System.err.println(employeeRepository.retrieveEmployees());
 	}
 }

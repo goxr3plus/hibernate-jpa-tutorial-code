@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.goxr3plus.jpa.hibernate.entity.Employee;
+import com.goxr3plus.jpa.hibernate.entity.FullTimeEmployee;
+import com.goxr3plus.jpa.hibernate.entity.PartTimeEmployee;
 
 @Repository
 @Transactional
@@ -21,8 +23,12 @@ public class EmployeeRepository {
 		em.persist(employee);
 	}
 
-	public List<Employee> retrieveEmployees() {
-		return em.createQuery("SELECT e FROM Employee e", Employee.class).getResultList();
+	public List<PartTimeEmployee> retrievePartTimeEmployees() {
+		return em.createQuery("SELECT e FROM PartTimeEmployee e", PartTimeEmployee.class).getResultList();
+	}
+
+	public List<FullTimeEmployee> retrieveFullTimeEmployees() {
+		return em.createQuery("SELECT e FROM FullTimeEmployee e", FullTimeEmployee.class).getResultList();
 	}
 
 	public Employee findById(final Long id) {
