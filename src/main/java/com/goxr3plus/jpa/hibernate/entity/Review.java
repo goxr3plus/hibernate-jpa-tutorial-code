@@ -2,10 +2,14 @@ package com.goxr3plus.jpa.hibernate.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+
+import com.goxr3plus.jpa.hibernate.enums.Rating;
 
 @Entity
 public class Review {
@@ -14,7 +18,8 @@ public class Review {
 	@GeneratedValue
 	private Long id;
 
-	private String rating;
+	@Enumerated(EnumType.STRING)
+	private Rating rating;
 
 	@NotNull
 	@Column(nullable = false)
@@ -27,17 +32,17 @@ public class Review {
 
 	}
 
-	public Review(String rating, @NotNull String description) {
+	public Review(final Rating rating, @NotNull final String description) {
 		super();
 		this.rating = rating;
 		this.description = description;
 	}
 
-	public String getRating() {
+	public Rating getRating() {
 		return rating;
 	}
 
-	public void setRating(String rating) {
+	public void setRating(final Rating rating) {
 		this.rating = rating;
 	}
 
@@ -45,15 +50,15 @@ public class Review {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
-	
+
 	public Course getCourse() {
 		return course;
 	}
 
-	public void setCourse(Course course) {
+	public void setCourse(final Course course) {
 		this.course = course;
 	}
 
@@ -65,7 +70,5 @@ public class Review {
 	public String toString() {
 		return "Review [id=" + id + ", rating=" + rating + ", description=" + description + "]";
 	}
-
-
 
 }

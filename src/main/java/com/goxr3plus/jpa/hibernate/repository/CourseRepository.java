@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.goxr3plus.jpa.hibernate.entity.Course;
 import com.goxr3plus.jpa.hibernate.entity.Review;
+import com.goxr3plus.jpa.hibernate.enums.Rating;
 
 @Repository
 @Transactional
@@ -17,15 +18,15 @@ public class CourseRepository {
 	@Autowired
 	private EntityManager em;
 
-	public Course findById(Long id) {
+	public Course findById(final Long id) {
 		return em.find(Course.class, id);
 	}
 
-	public void deleteById(Long id) {
+	public void deleteById(final Long id) {
 		em.remove(findById(id));
 	}
 
-	public Course save(Course course) {
+	public Course save(final Course course) {
 		if (course.getId() == null)
 			em.persist(course);
 		else
@@ -33,36 +34,34 @@ public class CourseRepository {
 
 		return course;
 	}
-	
+
 	public void addReviewForCourse() {
-		
-		Course course = findById(1003L);
-		
+
+		final Course course = findById(1003L);
+
 		System.err.println(course.getReviews());
-		
-		
-		Review review = new Review("5","Great Hands-On Stuff");
-		Review review2 = new Review("5","Hatsoff");
-		
-		//Set the relationship
+
+		final Review review = new Review(Rating.FIVE, "Great Hands-On Stuff");
+		final Review review2 = new Review(Rating.FIVE, "Hatsoff");
+
+		// Set the relationship
 		course.addReview(review);
 		review.setCourse(course);
-		
+
 		course.addReview(review2);
 		review2.setCourse(course);
-		
-		
-		//Save to database
+
+		// Save to database
 		em.persist(review);
 		em.persist(review2);
-		
+
 	}
 
 	public void playWithEntityManager() {
 
 		// Make an instance managed and persistent.
-		Course course1 = new Course("Web Services in 100 steps");
-		Course course2 = new Course("Angular Js in 100 steps");
+		final Course course1 = new Course("Web Services in 100 steps");
+		final Course course2 = new Course("Angular Js in 100 steps");
 		em.persist(course1);
 		em.persist(course2);
 
@@ -73,10 +72,10 @@ public class CourseRepository {
 		// detached. Changes made to entities thathave not been flushed to the database
 		// will not bepersisted.
 		//
-		//em.clear();
+		// em.clear();
 		//
-		
-		//Detach only one
+
+		// Detach only one
 		em.detach(course2);
 
 		// or
@@ -95,8 +94,8 @@ public class CourseRepository {
 	public void playWithEntityManager2() {
 
 		// Make an instance managed and persistent.
-		Course course1 = new Course("Web Services in 100 steps");
-		Course course2 = new Course("Angular Js in 100 steps");
+		final Course course1 = new Course("Web Services in 100 steps");
+		final Course course2 = new Course("Angular Js in 100 steps");
 		em.persist(course1);
 		em.persist(course2);
 
