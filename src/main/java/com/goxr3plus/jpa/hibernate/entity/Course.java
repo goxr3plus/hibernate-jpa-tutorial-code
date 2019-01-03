@@ -10,23 +10,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "course")
-@NamedQueries(value = { @NamedQuery(name = "get_all_courses", query = "SELECT c FROM Course c"),
-		@NamedQuery(name = "query_100_steps_courses", query = "SELECT c FROM Course c where name like '%100 Steps'") })
+@NamedQuery(name = "get_all_courses", query = "SELECT c FROM Course c")
+@NamedQuery(name = "query_100_steps_courses", query = "SELECT c FROM Course c where name like '%100 Steps'")
 @Cacheable
+@SQLDelete(sql = "update course set is_deleted=true where id=?")
+@Where(clause = "is_deleted=false")
 public class Course {
+
+	private static final Logger logger = LoggerFactory.getLogger(Course.class);
 
 	@Id
 	@GeneratedValue
@@ -46,6 +54,15 @@ public class Course {
 
 	@OneToMany(mappedBy = "course")
 	private List<Review> reviews;
+
+	@Column(name = "is_deleted")
+	private boolean isDeleted;
+
+	@PreRemove
+	private void preRemove() {
+		logger.info("Setting is_deleted to true");
+		this.isDeleted = true;
+	}
 
 	@ManyToMany(mappedBy = "courses")
 	@JsonIgnore

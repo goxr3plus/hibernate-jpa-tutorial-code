@@ -1,5 +1,7 @@
 package com.goxr3plus.jpa.hibernate.demo;
 
+import static org.junit.Assert.assertNull;
+
 import javax.persistence.EntityManager;
 
 import org.junit.Test;
@@ -8,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,11 +40,18 @@ public class CourseRepositoryTest {
 	}
 
 	@Test
-	//@Transactional
+	// @Transactional
 	public void testReview() {
 		final Review review = entityManager.find(Review.class, 5001L);
 		System.err.println(review);
 		System.err.println(review.getCourse());
+	}
+
+	@Test
+	@DirtiesContext
+	public void deleteById_basic() {
+		courseRepository.deleteById(1002L);
+		assertNull(courseRepository.findById(1002L));
 	}
 
 }
