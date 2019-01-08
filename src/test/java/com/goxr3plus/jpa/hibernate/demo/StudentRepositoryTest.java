@@ -1,5 +1,8 @@
 package com.goxr3plus.jpa.hibernate.demo;
 
+import java.util.List;
+
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 
 import org.junit.Test;
@@ -13,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.goxr3plus.jpa.hibernate.DemoApplication;
 import com.goxr3plus.jpa.hibernate.entity.Address;
+import com.goxr3plus.jpa.hibernate.entity.Course;
 import com.goxr3plus.jpa.hibernate.entity.Passport;
 import com.goxr3plus.jpa.hibernate.entity.Student;
 import com.goxr3plus.jpa.hibernate.repository.StudentRepository;
@@ -133,6 +137,39 @@ public class StudentRepositoryTest {
 		final Student student = em.find(Student.class, 2001L);
 		System.err.println(student);
 		System.err.println(student.getCourses());
+	}
+
+	@Test
+	@Transactional
+	public void NPlusOenProblem() {
+
+		final List<Course> courses = em.createNamedQuery("get_all_courses", Course.class).getResultList();
+		courses.stream().forEach(course -> {
+			logger.info("Course -> {} Students -> {}", course, course.getStudents());
+		});
+	}
+
+	@Test
+	@Transactional
+	public void solvingNPlusOenProblem_EntityGraph() {
+		final EntityGraph<Course> entityGraph = em.createEntityGraph(Course.class);
+		entityGraph.addSubgraph("students");
+
+		final List<Course> courses = em.createNamedQuery("get_all_courses", Course.class)
+				.setHint("javax.persistence.loadgraph", entityGraph).getResultList();
+		courses.stream().forEach(course -> {
+			logger.info("Course -> {} Students -> {}", course, course.getStudents());
+		});
+	}
+
+	@Test
+	@Transactional
+	public void solvingNPlusOenProblem_JOIN_FETCH() {
+
+		final List<Course> courses = em.createNamedQuery("get_all_courses_join_fetch", Course.class).getResultList();
+		courses.stream().forEach(course -> {
+			logger.info("Course -> {} Students -> {}", course, course.getStudents());
+		});
 	}
 
 }
